@@ -1178,6 +1178,16 @@ function routes() {
       precedence over these lightweight routes*/}
         <Route component={errorHandler(LightWeightOrganizationDetails)}>
           <Route
+            path="/organizations/:orgId/teams/"
+            componentPromise={() =>
+              import(/* webpackChunkName: "TeamsDashboard" */ 'app/views/teamsDashboard')
+            }
+            component={errorHandler(LazyLoad)}
+          >
+            <IndexRoute component={errorHandler(LazyLoad)} />
+            <Route path="my-teams/" component={errorHandler(LazyLoad)} />
+          </Route>
+          <Route
             path="/organizations/:orgId/projects/"
             componentPromise={() =>
               import(
