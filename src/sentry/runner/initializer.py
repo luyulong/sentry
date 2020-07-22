@@ -11,6 +11,7 @@ from sentry.utils import metrics, warnings
 from sentry.utils.sdk import configure_sdk
 from sentry.utils.warnings import DeprecatedSettingWarning
 from sentry.utils.compat import map
+from sentry.utils.compat.pickle import monkeypatch_pickle_loaders
 
 logger = logging.getLogger("sentry.runner.initializer")
 
@@ -302,6 +303,8 @@ def initialize_app(config, skip_service_validation=False):
 
     if getattr(settings, "SENTRY_DEBUGGER", None) is None:
         settings.SENTRY_DEBUGGER = settings.DEBUG
+
+    monkeypatch_pickle_loaders()
 
     monkeypatch_model_unpickle()
 
